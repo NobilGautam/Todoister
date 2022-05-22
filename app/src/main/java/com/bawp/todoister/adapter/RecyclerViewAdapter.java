@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bawp.todoister.R;
 import com.bawp.todoister.model.Task;
+import com.bawp.todoister.util.Utils;
 import com.google.android.material.chip.Chip;
 
 import java.util.List;
@@ -32,13 +33,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+        Task task = allTasks.get(position);
+        holder.task.setText(task.getTask());
 
+        String formattedDate = Utils.formattedDate(task.getDueDate());
+        holder.todayChip.setText(formattedDate);
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemCount() { return allTasks.size(); }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RadioButton radioButton;
