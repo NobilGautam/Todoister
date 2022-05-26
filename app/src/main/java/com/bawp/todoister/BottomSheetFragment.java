@@ -18,10 +18,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.security.acl.Group;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,6 +31,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private Group calendarGroup;
     private ImageButton calendarButton;
     private ImageButton priorityButton;
+    private ImageButton todayCalendarButton;
     private ImageButton saveTodoButton;
     private RadioButton selectedRadioButton;
     private int selectedButtonId;
@@ -56,6 +57,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         priorityButton = view.findViewById(R.id.priority_todo_button);
         saveTodoButton = view.findViewById(R.id.save_todo_button);
         priorityRadioGroup = view.findViewById(R.id.radioGroup_priority);
+        todayCalendarButton = view.findViewById(R.id.today_calendar_button);
 
         Chip todayChip = view.findViewById(R.id.today_chip);
         Chip tomorrowChip = view.findViewById(R.id.tomorrow_chip);
@@ -66,6 +68,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        calendarButton.setOnClickListener(v -> {
+            calendarGroup.setVisibility(
+                    calendarGroup.getVisibility() == View.GONE ? View.VISIBLE : View.GONE
+            );
+        });
+
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            calendar.clear();
+            calendar.set(year, month, dayOfMonth);
+            dueDate = calendar.getTime();
+        });
+
         saveTodoButton.setOnClickListener(v -> {
             String taskName = enterTodo.getText().toString().trim();
             if (!TextUtils.isEmpty(taskName)) {
@@ -73,12 +87,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                         Calendar.getInstance().getTime(), false);
                 TaskViewModel.insertTask(task);
             }
-        });
-
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            calendar.clear();
-            calendar.set(year, month, dayOfMonth);
-            dueDate = calendar.getTime();
         });
 
     }
