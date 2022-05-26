@@ -1,5 +1,7 @@
 package com.bawp.todoister;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.bawp.todoister.adapter.OnTodoClickListener;
@@ -19,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -99,6 +102,46 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
 
     @Override
     public void onTodoClick(int position, Task task) {
+        Log.d("IRClick", "item row clicked");
+    }
 
+    @Override
+    public void onRadioButtonClick(Task task) {
+
+        Log.d("RBClick", "Radio button clicked");
+
+        //Create the object of Alert Dialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        Log.d("RBClick", "builder object created");
+
+        //Setting the message to be shown
+        builder.setMessage("This task will be removed permanently");
+
+        //Set Alert title
+        builder.setTitle("Task Done?");
+
+        //Set cancellable false so that when user clicks
+        //outside the box the box will still be visible
+        builder.setCancelable(false);
+
+        //Setting the positive button
+        builder.setPositiveButton("YES", (dialog, which) -> {
+            //When the user clicks "YES" the dialog box will close
+            TaskViewModel.deleteTask(task);
+            recyclerViewAdapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+
+        //Setting the negative button
+        builder.setNegativeButton("NO", (dialog, which) -> {
+            //When the user clicks "NO" the dialog box will cancel
+            dialog.cancel();
+        });
+
+        //Create the alert dialog box
+        AlertDialog alertDialog = builder.create();
+
+        //Show the alert dialog box
+        alertDialog.show();
     }
 }

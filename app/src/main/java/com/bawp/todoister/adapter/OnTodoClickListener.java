@@ -4,4 +4,5 @@ import com.bawp.todoister.model.Task;
 
 public interface OnTodoClickListener {
     void onTodoClick(int position, Task task);
+    void onRadioButtonClick(Task task);
 }
