@@ -66,11 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //Setting up FAB to show bottom sheet fragment
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-//            Task task = new Task("Task " + counter++, Priority.HIGH, Calendar.getInstance().getTime(),
-//                    Calendar.getInstance().getTime(), false);
-//            TaskViewModel.insertTask(task);
             showBottomSheetDialogue();
-
         });
     }
 
