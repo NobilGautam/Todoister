@@ -25,7 +25,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.util.Calendar;
 import java.util.Date;
 
-public class BottomSheetFragment extends BottomSheetDialogFragment {
+public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     private EditText enterTodo;
     private CalendarView calendarView;
     private Group calendarGroup;
@@ -60,8 +60,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         todayCalendarButton = view.findViewById(R.id.today_calendar_button);
 
         Chip todayChip = view.findViewById(R.id.today_chip);
+        todayChip.setOnClickListener(this);
         Chip tomorrowChip = view.findViewById(R.id.tomorrow_chip);
+        tomorrowChip.setOnClickListener(this);
         Chip nextWeekChip = view.findViewById(R.id.next_week_chip);
+        nextWeekChip.setOnClickListener(this);
         return view;
     }
 
@@ -82,12 +85,30 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         saveTodoButton.setOnClickListener(v -> {
             String taskName = enterTodo.getText().toString().trim();
-            if (!TextUtils.isEmpty(taskName)) {
+            if (!TextUtils.isEmpty(taskName) && dueDate != null) {
                 Task task = new Task(taskName, Priority.HIGH, dueDate,
                         Calendar.getInstance().getTime(), false);
                 TaskViewModel.insertTask(task);
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.today_chip) {
+            //set today as due date
+            calendar.add(Calendar.DAY_OF_YEAR, 0);
+            dueDate = calendar.getTime();
+        } else if (id == R.id.tomorrow_chip) {
+            //set tomorrow as due date
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            dueDate = calendar.getTime();
+        } else if (id == R.id.next_week_chip) {
+            //set next week as due date
+            calendar.add(Calendar.DAY_OF_YEAR, 7);
+            dueDate = calendar.getTime();
+        }
     }
 }
