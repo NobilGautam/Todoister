@@ -2,11 +2,13 @@ package com.bawp.todoister;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.bawp.todoister.adapter.OnTodoClickListener;
 import com.bawp.todoister.adapter.RecyclerViewAdapter;
 import com.bawp.todoister.model.Priority;
+import com.bawp.todoister.model.SharedViewModel;
 import com.bawp.todoister.model.Task;
 import com.bawp.todoister.model.TaskViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
     private RecyclerViewAdapter recyclerViewAdapter;
     private int counter;
     private BottomSheetFragment bottomSheetFragment;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sharedViewModel = new ViewModelProvider(this)
+                .get(SharedViewModel.class);
 
         //Initializing bottom sheet fragment
         bottomSheetFragment = new BottomSheetFragment();
@@ -101,8 +107,10 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
     }
 
     @Override
-    public void onTodoClick(int position, Task task) {
+    public void onTodoClick(Task task) {
         Log.d("IRClick", "item row clicked");
+        sharedViewModel.selectItem(task);
+        showBottomSheetDialogue();
     }
 
     @Override
