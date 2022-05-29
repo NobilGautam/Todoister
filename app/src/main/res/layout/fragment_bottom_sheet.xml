@@ -15,11 +15,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="@dimen/dimen_16"
+        android:paddingTop="8dp"
         android:paddingRight="@dimen/dimen_16"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -43,11 +44,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="@dimen/dimen_16"
+        android:paddingTop="8dp"
         android:paddingRight="@dimen/dimen_16"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -71,11 +73,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="@dimen/dimen_16"
+        android:paddingTop="8dp"
         android:paddingRight="@dimen/dimen_16"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -99,11 +102,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="@dimen/dimen_16"
+        android:paddingTop="8dp"
         android:paddingRight="@dimen/dimen_16"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -127,11 +131,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
         android:paddingLeft="@dimen/dimen_16"
+        android:paddingTop="8dp"
         android:paddingRight="@dimen/dimen_16"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:layout_width="24dp"

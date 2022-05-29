@@ -1,43 +1,34 @@
 package com.bawp.todoister;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RadioButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bawp.todoister.adapter.OnTodoClickListener;
 import com.bawp.todoister.adapter.RecyclerViewAdapter;
-import com.bawp.todoister.model.Priority;
 import com.bawp.todoister.model.SharedViewModel;
 import com.bawp.todoister.model.Task;
 import com.bawp.todoister.model.TaskViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnTodoClickListener {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private int counter;
     private BottomSheetFragment bottomSheetFragment;
     private SharedViewModel sharedViewModel;
+    private TaskViewModel taskViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +46,13 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
         BottomSheetBehavior<ConstraintLayout> bottomSheetBehavior = BottomSheetBehavior.from(constraintLayout);
         bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
 
-        counter = 0;
-
         //Initializing recycler view
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Instantiating task view model
-        TaskViewModel taskViewModel = new ViewModelProvider.AndroidViewModelFactory(
+        taskViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 MainActivity.this.getApplication())
                 .create(TaskViewModel.class);
 
@@ -100,7 +89,11 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
             return true;
+        } else if (id == R.id.delete_all_tasks) {
+            TaskViewModel.deleteAllTasks();
         }
 
         return super.onOptionsItemSelected(item);
@@ -109,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnTodoClickListen
     @Override
     public void onTodoClick(Task task) {
         Log.d("IRClick", "item row clicked");
+        sharedViewModel.setIsEdit(true);
         sharedViewModel.selectItem(task);
         showBottomSheetDialogue();
     }

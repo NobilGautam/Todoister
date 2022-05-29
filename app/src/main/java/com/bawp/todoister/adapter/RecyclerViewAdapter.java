@@ -1,5 +1,7 @@
 package com.bawp.todoister.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         Task task = allTasks.get(position);
         holder.task.setText(task.getTask());
+
+        //Changing color of views according to priority
+        ColorStateList colorStateList = new ColorStateList(new int[][]{
+                new int[] {-android.R.attr.state_enabled},
+                new int[] {android.R.attr.state_enabled}
+        }, new int[]{
+                Color.LTGRAY,
+                Utils.priorityColor(task)
+        });
+        holder.todayChip.setTextColor(Utils.priorityColor(task));
+        holder.todayChip.setChipIconTint(colorStateList);
+        holder.radioButton.setButtonTintList(colorStateList);
 
         String formattedDate = Utils.formattedDate(task.getDueDate());
         holder.todayChip.setText(formattedDate);

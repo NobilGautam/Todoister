@@ -2,6 +2,7 @@ package com.bawp.todoister.data;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -29,8 +30,13 @@ public class TaskRepository {
         TaskRoomDatabase.databaseWriteExecutor.execute(() -> taskDao.delete(task));
     }
 
+    public void deleteAll() {
+        TaskRoomDatabase.databaseWriteExecutor.execute(() -> taskDao.deleteAll());
+    }
+
     public void update(Task task) {
         TaskRoomDatabase.databaseWriteExecutor.execute(() -> taskDao.update(task));
+        Log.d("Update_task", "update: task called");
     }
 
     public void insert(Task task) {
